@@ -1,0 +1,67 @@
+.headerbar {
+  position: relative;
+  margin-top: .3rem;
+  line-height: .8rem;
+  padding-left: .3rem;
+  padding-right: .2rem;
+  font-weight: bold;
+  background-color: #fff;
+  box-shadow: 0 2px 5px #ccc;
+  border-radius: .2rem;
+  .searchbar {
+    position: relative;
+    height: 0.8rem;
+    input {
+      border: none;
+      font-size: 12px;
+      border-bottom: 1px solid #38bcfd4d;
+      padding-bottom: .06rem;
+      width: 85%;
+      &::placeholder {
+        color: #bbb;
+      }
+    }
+    button {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0);
+      border: none;
+      font-size: 18px;
+    }
+  }
+  .addition_item {
+    line-height: normal;
+    .addition_title {
+      font-size: 12px;
+    }
+    .addition_list {
+      display: flex;
+      flex-wrap: wrap;
+      padding-top: .1rem;
+      padding-bottom: .2rem;
+      span {
+        padding: .05rem .15rem;
+        margin-right: .15rem;
+        margin-bottom: .15rem;
+        font-weight: 500;
+        border: 1px solid #e7e7e7;
+        color: rgb(126,127,138);
+        border-radius: .4rem;
+        &.action {
+          border-color: #002157;
+          color: #002157;
+          font-weight:bold;
+          background-color: rgb(196, 235, 255);
+        }
+      }
+    }
+
+  }
+}
+.device_list {
+  height: calc(100vh - 2.2rem);
+  padding: 0 .3rem 1rem;
+  overflow: auto;
+}

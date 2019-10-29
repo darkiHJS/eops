@@ -1,0 +1,16 @@
+{
+  "e6150364c95748f48a19ff1c272d6e03": {
+    "rules": {
+      "开始": {
+        "title":{
+          "mixin_defaultValve": "fn_getRuleTitle"
+        },
+        "urgentLevel": {
+          "mixin_show": false,
+          "mixin_defaultValue": 3
+        }
+      }
+    },
+    "File": true
+  }
+}

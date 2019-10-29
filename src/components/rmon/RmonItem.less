@@ -1,0 +1,44 @@
+.rmonitem {
+  position: relative;
+  background-color: #fff;
+  .rmonitem_img {
+    position: absolute;
+    left: .3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1.4rem;
+    height: 1.4rem;
+    overflow: hidden;
+    text-align: center;
+    line-height: 1.4rem;
+    img {
+      width: 70%;
+    }
+  }
+  .rmonitem_info {
+    height: 1.4rem;
+    background-color: #fff;
+    margin-left: 1.6rem;
+    padding-top: .35rem;
+    padding-right: .5rem;
+    border-bottom: 1px solid #dddddd;
+    h3,p{
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    h3 {
+      font-size: 14px;white-space: nowrap;
+    }
+    p {
+      color: rgb(179, 179, 179);
+    }
+  }
+  .rmonitem_rightIcon {
+    position: absolute;
+    right: .3rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

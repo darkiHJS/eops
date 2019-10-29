@@ -1,0 +1,32 @@
+:global {
+  .ant-card-body {
+    padding: .3rem .4rem;
+  }
+}
+.tables_nums {
+  display: grid;
+  grid-template-columns: repeat(3, 33.33%);
+  .tables_item {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    &:nth-child(3),
+    &:nth-child(6) {
+      border-right: 0;
+    }
+    &:nth-child(4),
+    &:nth-child(5),
+    &:nth-child(6) {
+      border-bottom: 0;
+    }
+    h4,
+    p {
+      text-align: center;
+      margin: 0;
+    }
+  }
+}
+.chart {
+  height: 7rem;
+}
