@@ -1,19 +1,27 @@
+import { useState, useEffect } from 'react'
 
 import styles from './index.less'
 import { List, WingBlank, WhiteSpace } from 'antd-mobile'
 import { Statistic, Row, Col, Button } from 'antd';
 import { router } from 'umi'
 import IconFont from '@/components/globel/IconFont';
+import { USER_INFO_ID } from '@/config'
 
 const Item = List.Item;
 
 export default () => {
+  const [ userInfo, setUserInfo ] = useState({})
+  useEffect(() => {
+    if(localStorage[USER_INFO_ID]) {
+      setUserInfo(JSON.parse(localStorage[USER_INFO_ID]))
+    }
+  }, [])
   return (
     <>
       <div className={styles.header}>
         <WhiteSpace />
         <WingBlank>
-          <h3 className={styles.username} data-job={'研发工程师'}>尚更</h3>
+          <h3 className={styles.username} data-job={userInfo.roleName}>{userInfo.realname || 'unknow'}</h3>
           <p className={styles.corporation}><IconFont type="iconposition" />{"上海尚禾信息技术有限公司"}</p>
         </WingBlank>
       </div>

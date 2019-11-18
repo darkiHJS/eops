@@ -3,3 +3,22 @@
     background-color: rgba(0,0,0,0);
   }
 }
+.drawer_open {
+  display: flex;
+  flex-wrap: wrap;
+  .drawer_tag {
+    padding: 0.1rem;
+    background-color: #edf0f5;
+    border: 1px solid #e3e8ef;
+    border-radius: 0;
+    margin-bottom: 0.05rem;
+  }
+  :global {
+    .ant-tag {
+      margin-bottom: .15rem;
+    }
+    .ant-tag-checkable-checked {
+      background-color: #1890ff;
+    }
+  }
+}

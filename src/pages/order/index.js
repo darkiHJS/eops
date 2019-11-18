@@ -41,7 +41,7 @@ export default function (props) {
         setOrderList([...orderList, ...d.list])
       }
     })
-      .catch((e) => { console.log(e) })
+      .catch((e) => { })
   }
   const handleChange = (tag, checked) => {
     const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
@@ -87,18 +87,18 @@ export default function (props) {
       <HeaderNormal title="工单列表" />
       <Tabs tabs={tabs}
         initialPage={location.query.state}
-        onChange={(tab, index) => { console.log('onChange', index, tab); }}
-        onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+        onChange={(tab, index) => {  }}
+        onTabClick={(tab, index) => {  }}
       />
       <SearchBar
         className={styles.search}
         showCancelButton
         placeholder="请输入工单或者流水号"
         cancelText="筛选"
-        onSubmit={value => console.log(value, 'onSubmit')}
-        onClear={value => console.log(value, 'onClear')}
-        onFocus={() => console.log('onFocus')}
-        onBlur={() => console.log('onBlur')}
+        onSubmit={value => {}}
+        onClear={value => {}}
+        onFocus={() =>{}}
+        onBlur={() =>{}}
         onCancel={() => { setDrawerOpen(true) }}
       />
       <Drawer

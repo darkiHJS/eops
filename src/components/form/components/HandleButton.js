@@ -4,7 +4,6 @@ import { Button, Modal, Tabs } from 'antd-mobile';
 export default ({ handle, cb }) => {
   const [showModel, setShowModel] = useState(false)
   const [groups, setGroups] = useState({})
-  console.log(handle)
   const handleClick = () => {
     if (groups.key) {
       setShowModel(true)

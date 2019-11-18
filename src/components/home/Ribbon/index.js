@@ -2,24 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { Carousel, WingBlank } from 'antd-mobile';
 import IconFont from '@/components/globel/IconFont';
 import styles from './index.less';
-import { router } from 'umi'
 
+import RibbonItem from './RibbonItem'
 
-const fb = [
-  { name: '待办工单', key: 'gzbx', icon: (<IconFont type="iconweixiujilu" />), path: {pathname: './order' , query: { state: 1, number: 8 }} },
-  { name: '参与工单', key: 'gzbx', icon: (<IconFont type="iconcanyu" />), path: {pathname: './order' , query: { state: 2, number: 11 }} },
-  { name: '逾期工单', key: 'gzbx', icon: (<IconFont type="iconyiyuqi" />), path: {pathname: './order' , query: { state: 4, number: 3 }} },
-  { name: '完成工单', key: 'gzbx', icon: (<IconFont type="iconwancheng" />), path: {pathname: './order' , query: { state: 3, number: 15 }} },
-  { name: '故障设备', key: 'gzbx', icon: (<IconFont type="iconguzhang" />), path: {pathname: './device' , query: { state: 3, number: 8, title: '故障设备'}}  },
-  { name: '总览报表', key: 'gzbx', icon: (<IconFont type="iconbaobiaobiaoweiguanli" />), path: './tables' }
-]
-
-const routerTo = (route) => {
-  router.push(route)
+const base = {
+  "MyToDo": { name: '待办工单', icon: (<IconFont type="iconweixiujilu" />), path: { pathname: './order', query: { state: 1, number: 8 } } },
+  "MyFlow": { name: '参与工单', icon: (<IconFont type="iconcanyu" />), path: { pathname: './order', query: { state: 2, number: 11 } } },
+  "Overdue": { name: '逾期工单', icon: (<IconFont type="iconyiyuqi" />), path: { pathname: './order', query: { state: 4, number: 3 } } },
+  "Finish": { name: '完成工单', icon: (<IconFont type="iconwancheng" />), path: { pathname: './order', query: { state: 3, number: 15 } }},
+  "FaultyEquipment": { name: '故障设备', icon: (<IconFont type="iconguzhang" />), path: { pathname: './device', query: { state: 3, number: 8, title: '故障设备' } } },
+  "Overview": { name: '总览报表', icon: (<IconFont type="iconbaobiaobiaoweiguanli" />), path: './tables' },
+  "Alert": { name: '告警列表', icon: (<IconFont type="iconweichuligaojing" />), path: './rmon' }
 }
 
-export default function () {
-  const [fButton, setFButton] = useState(fb)
+
+export default function (props) {
+  const { role } = props
+  const [fButton, setFButton] = useState([[1,2,3,4,5,6]])
+  useEffect(() => {
+    if(role && role.length) {
+      let orders = []
+      role.forEach((item, index) => {
+        const page = Math.floor(index / 6)
+        if(!orders[page]) orders[page] = []
+        orders[page].push(item)
+      })
+      setFButton(orders)
+    }
+  }, [role])
+  
   return (
     <WingBlank>
       <div className={styles.ribbon}>
@@ -28,41 +39,16 @@ export default function () {
           infinite
           beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
           afterChange={index => console.log('slide to', index)}
-          dotStyle={{backgroundColor: "#eeeeee"}}
-          dotActiveStyle={{backgroundColor: "#002157"}}
+          dotStyle={{ backgroundColor: "#eeeeee" }}
+          dotActiveStyle={{ backgroundColor: "#002157" }}
         >
-          <div className={styles.ribbon_page}>
-            {fButton.map((o) => (
-              <div className={styles.ribbon_fb}>
-                <button onClick={() => { routerTo(o.path) }}>{o.icon}</button>
-                <p>{o.name}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.ribbon_page}>
-            {fButton.map((o) => (
-              <div className={styles.ribbon_fb}>
-                <button onClick={() => { routerTo(o.path) }}>{o.icon}</button>
-                <p>{o.name}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.ribbon_page}>
-            {fButton.map((o) => (
-              <div className={styles.ribbon_fb}>
-                <button onClick={() => { routerTo(o.path) }}>{o.icon}</button>
-                <p>{o.name}</p>
-              </div>
-            ))}
-          </div>
-          <div className={styles.ribbon_page}>
-            {fButton.map((o) => (
-              <div className={styles.ribbon_fb}>
-                <button onClick={() => { routerTo(o.path) }}>{o.icon}</button>
-                <p>{o.name}</p>
-              </div>
-            ))}
-          </div> 
+          {fButton.map((o) => (
+            <div className={styles.ribbon_page}>
+              {o.map((o) => (
+                <RibbonItem itemKey={base[o.code] || {}} />
+              ))}
+            </div>))
+          }
         </Carousel>
       </div>
     </WingBlank>

@@ -56,8 +56,12 @@ const Login = (props) => {
                     .then(d => {
                       local_set(USER_INFO_ID, {
                         userId: dd.data.userId,
-                        username: d.data.username,
-                        apiKey: d.data.apiKeys[0].key
+                        username: d.username,
+                        apiKey: d.apiKeys[0].key,
+                        role: d.role,
+                        roleName: d.roleName,
+                        realname: d.realname,
+                        mobile: d.mbile
                       })
                       router.push('/')
                     })

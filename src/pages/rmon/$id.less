@@ -4,7 +4,49 @@
       padding: 5px;
     }
   }
+  .deviceInfo {
+    padding-left: .4rem;
+    padding-right: .4rem;
+    padding-bottom: .4rem;
+    .devicename {
+      margin-bottom: .4rem;
+      .icon {
+        color: #8ac0f4;
+        font-size: 24px;
+        padding-right: .2rem;
+      }
+    }
+    .deviceitem {
+      color: #8ac0f4;
+      margin: 0;
+      padding-left: .7rem;
+      .state {
+        float: right;
+        color: #111;
+        &::before {
+          display: inline-block;
+          content: "";
+          background-color: #66ff33;
+          width: .2rem;
+          height: .2rem;
+          border-radius: 50%;
+          margin: 0 .1rem;
+        }
+      }
+    }
+    .devCharts {
+      .title {
+        color: #8ac0f4;
+        margin: 0;
+      }
+    }
+  }
   .charts {
     height: 250px;
+  }
+  .charts_1 {
+    height: 180px;
+  }
+  .dlist {
   }
 }

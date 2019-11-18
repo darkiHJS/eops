@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react'
 import styles from './index.less'
 import { router } from 'umi'
 import { queryOrderModel, queryLastOrderModel, queryOrderInfo, handleOrder } from '@/request/request'
-import { local_get } from '@/utils/index'
-import { USER_INFO_ID } from '@/config'
 
 import Form from '@/components/Form/Form'
 import HeaderNormal from '@/components/globel/HeaderNormal'
+import OrderHandleBtn from '@/components/order/OrderHandleBtn'
 import { List, WingBlank, WhiteSpace, Button, Steps, Popover } from 'antd-mobile'
 import IconFont from '@/components/globel/IconFont';
 
@@ -30,47 +29,11 @@ export default (porps) => {
       }
     })
     // 上传工单信息
-  }
-
-  const handleRule = () => {
-    // 判断是否有权限
-    if (executors.indexOf(local_get(USER_INFO_ID).userId) !== -1) {
-      if (orderInfo.isreceived === 1) {
-        return (
-          <>
-            <Button onClick={() => {
-              // 接单操作
-              handleOrder({
-                ticket_id: match.params.id,//工单id
-                model_id: location.query.modelId,//模型id
-                activity_id: location.query.actid || orderInfo.activity_id,//当前环节id
-                handle_type: "0", // 接单
-              }).then(() => {
-                loadOrderInfo()
-              })
-            }}>接单</Button>
-            <WhiteSpace size="sm" />
-          </>
-        )
-      }
-      return (
-        <>
-          <Button onClick={() => {
-            // 接单操作
-            toHandleOrder()
-          }}>处理工单</Button>
-          <WhiteSpace size="sm" />
-        </>
-      )
-    }
-    return null
-  }
-
+  } 
   const loadOrderModel = () => {
     queryOrderModel({
       ...location.query,
     }).then(d => {
-      console.log(d)
       if (d.activiti_type === 'EndNoneEvent') {
         queryLastOrderModel({
           ...match.params
@@ -85,16 +48,26 @@ export default (porps) => {
   const loadOrderInfo = () => {
     queryOrderInfo(match.params.id)
       .then(d => {
-        console.log(d)
         let serialize = {}
         d.form.map((form) => {
           serialize[form.code] = form.default_value
         })
         setOrderInfo(d)
+        console.log(d)
         setOrderData(serialize)
         setFormHandle(d.handle_rules)
         setExecutors(d.executors)
       })
+  }
+  const orderSetExecutor = (fn) => {
+    handleOrder({
+      ticket_id: match.params.id,//工单id
+      model_id: location.query.modelId,//模型id
+      activity_id: location.query.actid || orderInfo.activity_id,//当前环节id
+      handle_type: "0", // 接单
+    }).then((d) => {
+      fn(d)
+    })
   }
   useEffect(() => {
     loadOrderModel()
@@ -141,7 +114,12 @@ export default (porps) => {
         </div>
         <List renderHeader={() => '操作'} />
         <WhiteSpace size="sm" />
-        {handleRule()}
+        <OrderHandleBtn 
+          executors={executors} 
+          isreceived={orderInfo.isreceived} 
+          orderSetExecutor={orderSetExecutor}
+          toHandleOrder={toHandleOrder}
+        />
         <Button onClick={() => { router.push('/order') }}>返回</Button>
         <WhiteSpace size="lg" />
       </WingBlank>

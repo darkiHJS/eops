@@ -35,18 +35,18 @@ export default () => {
       <HeaderNormal title="设备性能监控" />
       <Tabs tabs={tabs}
         initialPage={0}
-        onChange={(tab, index) => { console.log('onChange', index, tab); }}
-        onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+        onChange={(tab, index) => {  }}
+        onTabClick={(tab, index) => { }}
       />
       <SearchBar
         className={styles.search}
         showCancelButton
         placeholder="搜索配置名称"
         cancelText="筛选"
-        onSubmit={value => console.log(value, 'onSubmit')}
-        onClear={value => console.log(value, 'onClear')}
-        onFocus={() => console.log('onFocus')}
-        onBlur={() => console.log('onBlur')}
+        onSubmit={value => {}}
+        onClear={value => {}}
+        onFocus={() => {}}
+        onBlur={() => {}}
         onCancel={() => { setDrawerOpen(true) }}
       />
       <Drawer
@@ -79,8 +79,8 @@ export default () => {
         </div>
       </Drawer>
       <RmonItem rmondevice={{name:'show01', from: 'IMSD服务器', id:'01'}} routerTo={routerTo}/>
-      <RmonItem rmondevice={{name:'10.11.42.119', from: '东智服务器', id:'01'}} routerTo={routerTo}/>
-      <RmonItem rmondevice={{name:'本地服务器', from: '大华', id:'01'}} routerTo={routerTo}/>
+      <RmonItem rmondevice={{name:'10.11.42.119', from: 'IDSM服务器', id:'01'}} routerTo={routerTo}/>
+      <RmonItem rmondevice={{name:'本地服务器', from: '华为', id:'01'}} routerTo={routerTo}/>
       <RmonItem rmondevice={{name:'流量监控服务器', from: '华为', id:'01'}} routerTo={routerTo}/>
     </div>
   )

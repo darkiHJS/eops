@@ -75,19 +75,19 @@ const Device = (props) => {
       <HeaderNormal title="设备列表" />
       <Tabs tabs={tabs}
         initialPage={location.query.state}
-        onChange={(tab, index) => { console.log('onChange', index, tab); }}
-        onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+        onChange={(tab, index) => {}}
+        onTabClick={(tab, index) => {}}
       />
       <SearchBar
         className={styles.search}
         showCancelButton
         placeholder="请输入设备名称或设备id"
         cancelText="筛选"
-        onSubmit={value => console.log(value, 'onSubmit')}
-        onClear={value => console.log(value, 'onClear')}
-        onFocus={() => console.log('onFocus')}
-        onBlur={() => console.log('onBlur')}
-        onCancel={() => { setDrawerOpen(true) }}
+        onSubmit={value =>{}}
+        onClear={value => {}}
+        onFocus={() => {}}
+        onBlur={() =>{}}
+        onCancel={() => {} }
       />
       <Drawer
         className={styles.drawer}

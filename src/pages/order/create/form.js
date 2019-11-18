@@ -52,7 +52,6 @@ const Forms = (props) => {
           imgFile.map((i) => {
             imgs.push(i.url.split(',')[1])
           })
-          console.log(imgs)
           updateImage({
             ticketId: d.data.id,
             filesBase64: imgs
@@ -96,7 +95,6 @@ const Forms = (props) => {
       } else {
         setFormList(model.field_list)
       }
-      console.log(model.field_list)
       setShowFileUp(model.field_list.findIndex((v) => {
         if(v.code === 'file') {
           return true

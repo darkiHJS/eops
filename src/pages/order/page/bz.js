@@ -71,7 +71,7 @@ export default (porps) => {
     queryOrderModel({
       ...location.query,
     }).then(d => {
-      console.log(d)
+
       if (d.activiti_type === 'EndNoneEvent') {
         queryLastOrderModel({
           ...match.params
@@ -86,7 +86,6 @@ export default (porps) => {
   const loadOrderInfo = () => {
     queryOrderInfo(match.params.id)
       .then(d => {
-        console.log(d)
         let serialize = {}
         d.form.map((form) => {
           serialize[form.code] = form.default_value

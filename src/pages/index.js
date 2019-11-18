@@ -1,5 +1,9 @@
+import { useState, useEffect, useRef } from 'react'
+import { USER_INFO_ID } from '@/config'
 import styles from './index.less';
-import { WingBlank } from 'antd-mobile';
+
+import { router } from 'umi'
+
 import Carousel from '@/components/home/Carousel/index'
 import Ribbon from '@/components/home/Ribbon/index'
 import Repairs from '@/components/home/Repairs/index'
@@ -8,16 +12,26 @@ import Statistic from '@/components/home/Statistic/index'
 import Charts from '@/components/home/Charts/index'
 
 export default function() {
+  const [ userIndexState, setUserInodeState ] = useState({})
+  const nowIndexState = useRef(userIndexState)
+  useEffect(() => {
+    if(localStorage[USER_INFO_ID]) {
+      setUserInodeState(JSON.parse(localStorage[USER_INFO_ID]))
+      nowIndexState.current = JSON.parse(localStorage[USER_INFO_ID])
+    }else {
+      router.push('/login')
+    }
+  }, [])
   return (
     <div className={styles.home}>
       <div className={styles.header}>
         <Carousel/>
       </div>
-      <Ribbon />
+      <Ribbon role={userIndexState.role && userIndexState.role.menus.ConvenientMenu}/>
       <Repairs />
       <Notice />
-      <Statistic />
-      <Charts />
+      <Statistic role={userIndexState.role && userIndexState.role.menus.StatisticsView}/>
+      <Charts  role={userIndexState.role && userIndexState.role.menus.ReportView}/>
     </div>
   );
 }

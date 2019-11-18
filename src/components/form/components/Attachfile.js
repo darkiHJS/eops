@@ -7,7 +7,6 @@ export default class Attachfile extends Component {
     this.state = {
       files: []
     }
-    console.log(props)
     this.handleImageLoad.bind(this)
     window.handleImageLoad = this.handleImageLoad
   }
@@ -27,7 +26,6 @@ export default class Attachfile extends Component {
     this.props.cb(this.state.files)
   }
   filesChange= (img, type, index) => {
-    console.log(img,type, index)
     this.setState({
       files: img,
     });

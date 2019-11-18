@@ -1,5 +1,5 @@
 import axios from './http'
-// import { ...name } from '@/request/request'
+// import { ...name  } from '@/request/request'
 
 // 登录
 export const login = async ({ userName, passWord }) => {
@@ -72,6 +72,31 @@ export const queryOrderModel = async (params) => {
   })
   return data
 }
+
+// 查询当前工单可用执行人
+export const queryOrderExecutor = async (params) => {
+  const { data } = await axios({
+    method: 'get',
+    url: '/ticket/getUserAndGroupsForTicket',
+    params: {
+      ...params
+    }
+  })
+  return data
+}
+
+// 改派 
+export const changeOrderExecutor = async (params) => {
+  const { data } = await axios({
+    method: 'get',
+    url: '/ticket/reassignTicket',
+    params: {
+      ...params
+    }
+  })
+  return data
+}
+
 
 // 获取结束工单模型 
 export const queryLastOrderModel = async (params) => {
