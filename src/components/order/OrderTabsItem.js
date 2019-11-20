@@ -15,7 +15,7 @@ export default function(props) {
   }
   return (
     <div className={styles.item} onClick={routerTo}>
-      <h2 className={styles.title}>{info.formData.title}</h2>
+      <h2 className={styles.title}>{"测试工单 - " + info.flowNo}</h2>
       <p className={styles.flowcode}>{info.flowNo}</p>
       <WhiteSpace/>
       <p className={styles.description}>工单描述：{info.formData.ticketDesc || '无工单描述信息'}</p>

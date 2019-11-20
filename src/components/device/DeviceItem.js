@@ -20,9 +20,12 @@ export default (props) => {
         <img src={require(`@/assets/imgs/order/${device.classCode.toLocaleLowerCase()}.jpg`)} />
       </div>
       <div className={styles.device_info}>
-        <h3>{device.name} <span style={{float: 'right', color: stateList[cameraState].color}}>{stateList[cameraState].name}</span></h3>
+        {/* <h3>{device.name} <span style={{float: 'right', color: stateList[cameraState].color}}>{stateList[cameraState].name}</span></h3>
         <p>{device.className} - {device.managementUnit}({device.ip})</p>
-        <p>负责人: {device.projectMan} 联系电话：{device.projectManPhone} </p>
+        <p>负责人: {device.projectMan} 联系电话：{device.projectManPhone} </p> */}
+        <h3>{'测试工单 - ' + ( +new Date())} <span style={{float: 'right', color: stateList[cameraState].color}}>{stateList[cameraState].name}</span></h3>
+        <p>{device.className} - {device.managementUnit.slice(2)}({device.ip})</p>
+        <p>负责人: {'测试人员 0' + Math.floor(Math.random() * 9 + 1)} 联系电话：{'1888888'} </p>
       </div>      
     </div>
   )
