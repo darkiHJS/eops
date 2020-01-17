@@ -89,9 +89,10 @@ const Forms = (props) => {
       const modelId = props.order.model_id || JSON.parse(saveData).model_id
       const model = await queryOrderModel({modelId: modelId})
       const follow = model.name;
+      console.log(model)
       if(order_config[modelId]) {
         const mixin =  order_config[modelId] 
-        setFormList(order_mixin(model.field_list, mixin.rules[follow] || {}))// 混入表单规则
+        setFormList(order_mixin(model.field_list, mixin.rules[follow] ||{}))// 混入表单规则
       } else {
         setFormList(model.field_list)
       }
@@ -103,7 +104,7 @@ const Forms = (props) => {
       setFormHandle(model.handle_rules)// 设置流转规则
     }
     onload()
-  }, [])
+  }, [props])
   return (
     <WingBlank>
       <WhiteSpace />

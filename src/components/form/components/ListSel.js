@@ -19,9 +19,11 @@ export default ({model, value, cb, showMode}) => {
 
   useEffect(()=>{
     const v = model.params.filter(param => param.value === value)
-    if(v.length) setInputValue(v[0].value)
-    else setInputValue(model.params[0].value)
-  }, [])
+    if(showMode) {
+      if(v.length) setInputValue(v[0].value)
+      else setInputValue(model.params[0].value)
+    } 
+  }, [model.params, showMode, value])
   
   return showMode ?
   (<ListView  name={model.name}>{util_getValueOfLabel(inputValue, model.params)}</ListView>) :
@@ -30,7 +32,7 @@ export default ({model, value, cb, showMode}) => {
       <WhiteSpace/>
       <InputItem 
         labelNumber={model.name.length < 5 ? 5 : model.name.length}
-        value={util_getValueOfLabel(inputValue, model.params)}
+        value={inputValue}
         extra={(<Icon type="right"/>)}
         onExtraClick={() => {setShow(!show)}}
         editable={0}

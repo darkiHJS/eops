@@ -72,7 +72,7 @@ export default (porps) => {
   useEffect(() => {
     loadOrderModel()
     loadOrderInfo()
-  }, [])
+  }, [loadOrderInfo, loadOrderModel])
 
   return (
     <>
@@ -89,10 +89,10 @@ export default (porps) => {
                 <div style={{ backgroundColor: "#ffffff", paddingTop: "15px", paddingBottom: '15px' }}>
                   <WingBlank>
                     <Steps size="small" current={1}>
-                      <Step title="申请" description="清明时节雨纷纷，" />
-                      <Step title="审核" description="路上行人欲断魂。" />
-                      <Step title="批准" description="借问酒家何处有，" />
-                      <Step title="完成" description="牧童遥指杏花村。" />
+                      <Step title="申请" description="" />
+                      <Step title="审核" description="" />
+                      <Step title="批准" description="" />
+                      <Step title="完成" description="" />
                     </Steps>
                   </WingBlank>
                 </div>
@@ -119,6 +119,7 @@ export default (porps) => {
           isreceived={orderInfo.isreceived} 
           orderSetExecutor={orderSetExecutor}
           toHandleOrder={toHandleOrder}
+          status={orderInfo.status}
         />
         <Button onClick={() => { router.push('/order') }}>返回</Button>
         <WhiteSpace size="lg" />

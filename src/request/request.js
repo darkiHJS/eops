@@ -137,10 +137,11 @@ export const queryOrderInfo = async (ticketId) => {
 
 // 设备列表
 export const queryDeviceList = async (q) => {
+  console.log(q)
   const { data } = await axios({
-    method: 'get',
-    url: '/cmdb/query',
-    params: {
+    method: 'post',
+    url: '/cmdb/queryAll',
+    data: {
       ...q
     }
   })
@@ -154,6 +155,18 @@ export const queryDeviceById = async (id) => {
     url: '/cmdb/get',
     params: {
       id: id
+    }
+  })
+  return data
+}
+
+// 查询全部设备classcode
+export const queryDeviceByClassCode = async (codes) => {
+  const { data } = await axios({
+    method: 'get',
+    url: '/cmdb/get_cmdb_classType',
+    params: {
+      codes: codes
     }
   })
   return data

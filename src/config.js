@@ -15,8 +15,8 @@ export const USER_INFO_ID = 'sungcor_ds2d2_dnsadnjnfdjn_e10adc3949ba59abbe56e057
  * @const  
  * 测试环境的Api 接口
  */
-export const BASEURL = 'http://itsm.sungcor.com:38020'
-// export const BASEURL = 'http://192.168.3.204:2222'
+// export const BASEURL = 'http://itsm.sungcor.com:38020'
+export const BASEURL = 'http://192.168.3.204:8020'
 
 //显示footerBar的页面
 export const FOOTERBAR_SHOW = ['/', '/order', '/user','/rmon' , '/device']

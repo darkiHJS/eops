@@ -42,6 +42,7 @@ export default () => {
           <IconFont type="iconicon-test2" /> 修改密码
         </Item>
         <Item arrow="horizontal" multipleLine onClick={() => {
+          localStorage.removeItem(USER_INFO_ID)
           router.push('/login')
         }}>
           <IconFont type={'iconqiehuan'} /> 切换用户

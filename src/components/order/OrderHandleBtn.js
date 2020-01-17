@@ -7,13 +7,14 @@ import { WhiteSpace, Button, Flex } from 'antd-mobile'
 
 export default (props) => {
   console.log(props)
-  const { isreceived, executors, orderSetExecutor, toHandleOrder } = props
+  const { isreceived, executors, orderSetExecutor, toHandleOrder, status } = props
   const userId = local_get(USER_INFO_ID).userId
 
   const [isShowHandle, setIsShowHandle] = useState(false)
   useEffect(() => {
     executors.indexOf(userId) !== -1 && setIsShowHandle(true)
-  }, [executors])
+    status === 3 && setIsShowHandle(false)
+  }, [executors, status, userId])
   return isShowHandle ?
     (
       <>

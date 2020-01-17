@@ -6,9 +6,11 @@ const Item = List.Item;
 const Brief = Item.Brief;
 
 export default ({model, value, cb, showMode }) => {
-  const [ showValue, setShowValue ] = useState(model.params[typeof value === 'number' ? value - 1 : 0].label)
+  const [ showValue, setShowValue ] = useState(() => {
+    const current = model.params.find(e => e.value === value)
+    return current ? current.label : ''
+  })
   const [ popup, setPopup ] = useState(false)
-
   useEffect(() => {
     if(value === '') {
       const def = model.params.filter((e) => e.select === 1)
@@ -17,7 +19,7 @@ export default ({model, value, cb, showMode }) => {
         setShowValue(def[0].label)
       }
     }
-  }, [])
+  }, [cb, model.params, value])
 
   return showMode ?
     (<ListView  name={model.name}>{showValue}</ListView>): 
@@ -45,7 +47,7 @@ export default ({model, value, cb, showMode }) => {
                   onClick={() => {
                     setPopup(false)
                     cb(param.value)
-                    setShowValue(model.params[param.value - 1].label)
+                    setShowValue(param.label)
                   }}
                 >{param.label}</Button>
                 <WhiteSpace size="xs"/>

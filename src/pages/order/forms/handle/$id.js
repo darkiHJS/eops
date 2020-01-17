@@ -17,6 +17,7 @@ const { CheckableTag } = Tag;
 
 const HandleForms = (porps) => {
   const { match, location } = porps
+  const [model, setModel] = useState([])
   const [orderModel, setOrderModel] = useState([])
   const [executors, setExecutors] = useState([])
   const [orderInfo, setOrderInfo] = useState([])
@@ -33,6 +34,8 @@ const HandleForms = (porps) => {
     queryOrderModel({
       ...location.query
     }).then(d => {
+      console.log(d)
+      setModel(d)
       setOrderModel(d.field_list)
     })
   }
@@ -50,7 +53,7 @@ const HandleForms = (porps) => {
         setExecutors(d.executors)
       })
   }
-  const orderToNext = ({ route_id }) => {
+  const orderToNext = (handle_rules) => {
     Modal.alert('确认信息', '是否提交工单?', [
       { text: '取消', onPress: () => console.log('cancel') },
       {
@@ -66,7 +69,7 @@ const HandleForms = (porps) => {
               ...orderData
             },
             handle_rules: {
-              route_id: route_id
+              ...handle_rules
             }
           }).then(d => {
             router.push({
@@ -121,7 +124,7 @@ const HandleForms = (porps) => {
   useEffect(() => {
     loadOrderModel()
     loadOrderInfo()
-  }, [])
+  }, [loadOrderInfo, loadOrderModel])
   return (
     <>
       <HeaderNormal title={'工单页'} route={'/order'} rightContent={[
@@ -150,6 +153,7 @@ const HandleForms = (porps) => {
         <List renderHeader={() => '工单详情'} />
         {orderModel.map(e => (<Form key={e.code}
           formModel={e}
+          key={e.code}
           value={orderData[e.code] || ''}
           cb={(k, v) => {
             setOrderData({
@@ -162,7 +166,7 @@ const HandleForms = (porps) => {
         <WhiteSpace size="sm" />
         {formHandle.map(h => (
           <>
-            <HandleButton key={h.route_id} handle={h} cb={orderToNext} />
+            <HandleButton key={h.route_id} handle={h} cb={orderToNext} model={model} />
             <WhiteSpace size="sm" />
           </>
         ))}

@@ -1,17 +1,20 @@
 import { useState, useEffect } from 'react'
 import { DatePicker, List } from 'antd-mobile';
+import { formatDate } from '@/utils/index'
 import ListView from './ListView'
 const Item = List.Item;
 // const Brief = Item.Brief;
 
 export default ({ model, value, cb, showMode }) => {
-  const [date, setDate] = useState(value || new Date())
+  const [date, setDate] = useState('')
   useEffect(() =>{
-    if(!value) {
-      cb(date)
+    if(value && value !== "1") {
+      console.log(value)
+      setDate(new Date(value))
+      cb(new Date(value))
     }
-  }, [])
-  return showMode ? (<ListView name={model.name}>{value}</ListView>)
+  }, [cb, value])
+  return showMode ? (<ListView name={model.name}>{formatDate(new Date(value), 'YYYY-MM-DD hh:mm:ss')}</ListView>)
     : (<DatePicker
       value={date}
       onChange={date => {

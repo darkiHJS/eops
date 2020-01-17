@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { USER_INFO_ID } from '@/config'
+import { local_set, local_get } from '@/utils/index'
 import styles from './index.less';
+import { message } from 'antd'
 
 import { router } from 'umi'
 
@@ -18,6 +20,11 @@ export default function() {
     if(localStorage[USER_INFO_ID]) {
       setUserInodeState(JSON.parse(localStorage[USER_INFO_ID]))
       nowIndexState.current = JSON.parse(localStorage[USER_INFO_ID])
+      if(!Object.keys(local_get(USER_INFO_ID).role.menus).length) {
+        message.warning('账户没有权限,请联系管理人员。')
+        localStorage.removeItem(USER_INFO_ID)
+        router.push('/login')
+      }
     }else {
       router.push('/login')
     }
