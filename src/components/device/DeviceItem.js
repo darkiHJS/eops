@@ -16,7 +16,7 @@ export default (props) => {
   return (
     <div className={styles.device_item} onClick={handleClick}>
       <div className={styles.device_img}>
-        <img src={require(`@/assets/imgs/order/${device.classCode.toLocaleLowerCase()}.jpg`)} />
+        {/* <img src={require(`@/assets/imgs/order/${device.classCode.toLocaleLowerCase()}.jpg`)} /> */}
       </div>
       <div className={styles.device_info}>
         <h3>{device.name}</h3>

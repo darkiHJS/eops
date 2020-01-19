@@ -69,8 +69,6 @@ const DeviceSellist = (props) => {
         code: 'resource'
       })
     })
-    console.log(selectedList)
-    console.log(relation_cis, resource)
     props.dispatch({
       type: 'order/setOrder',
       payload: {
@@ -87,13 +85,13 @@ const DeviceSellist = (props) => {
   const handleDeviceSelect = (device) => {
     let index = selectedList.findIndex(e => e.id === device.id)
     let arr = [...selectedList]
-    console.log(index)
     if (index === -1) {
       setSelectedList([...arr, device])
     } else {
       arr.splice(index, 1)
       setSelectedList([...arr])
     }
+    router.go(-1)
   }
   const handleInfiniteOnLoad = (v) => {
     setPageNum((v) => v + 1)

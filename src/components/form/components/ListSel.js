@@ -32,7 +32,7 @@ export default ({model, value, cb, showMode}) => {
       <WhiteSpace/>
       <InputItem 
         labelNumber={model.name.length < 5 ? 5 : model.name.length}
-        value={inputValue}
+        value={util_getValueOfLabel(inputValue, model.params)}
         extra={(<Icon type="right"/>)}
         onExtraClick={() => {setShow(!show)}}
         editable={0}
@@ -46,6 +46,7 @@ export default ({model, value, cb, showMode}) => {
           height={document.documentElement.clientHeight * 0.6}
           onChange={v => {
             setShow(false)
+    
             setInputValue(v[0])
             cb(v[0])
           }}

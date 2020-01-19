@@ -8,13 +8,13 @@ const Item = List.Item;
 export default ({ model, value, cb, showMode }) => {
   const [date, setDate] = useState('')
   useEffect(() =>{
-    if(value && value !== "1") {
+    if(value !== '' && value !== "1") {
       console.log(value)
       setDate(new Date(value))
       cb(new Date(value))
     }
   }, [cb, value])
-  return showMode ? (<ListView name={model.name}>{formatDate(new Date(value), 'YYYY-MM-DD hh:mm:ss')}</ListView>)
+  return showMode ? (<ListView name={model.name}>{ value ? formatDate(new Date(value), 'YYYY-MM-DD hh:mm:ss') : ''}</ListView>)
     : (<DatePicker
       value={date}
       onChange={date => {

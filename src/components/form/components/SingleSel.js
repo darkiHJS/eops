@@ -11,15 +11,15 @@ export default ({model, value, cb, showMode }) => {
     return current ? current.label : ''
   })
   const [ popup, setPopup ] = useState(false)
-  useEffect(() => {
-    if(value === '') {
-      const def = model.params.filter((e) => e.select === 1)
-      if(def.length) {
-        cb(def[0].value)
-        setShowValue(def[0].label)
-      }
-    }
-  }, [cb, model.params, value])
+  // useEffect(() => {
+  //   if(value === '') {
+  //     const def = model.params.filter((e) => e.select === 1)
+  //     if(def.length) {
+  //       cb(def[0].value)
+  //       setShowValue(def[0].label)
+  //     }
+  //   }
+  // },  [value])
 
   return showMode ?
     (<ListView  name={model.name}>{showValue}</ListView>): 

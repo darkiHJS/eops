@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './index.less'
 import { queryOrderList } from '@/request/request'
 import { Tabs, WhiteSpace, WingBlank, SearchBar, List } from 'antd-mobile';
 import { Drawer, Tag } from 'antd';
-
+import { USER_INFO_ID } from '@/config'
+import { local_set, local_get } from '@/utils/index'
 import HeaderNormal from '@/components/globel/HeaderNormal'
 import OrderTabsItem from '@/components/order/OrderTabsItem'
 
 const { CheckableTag } = Tag;
 const tagsFromOrderType = ['工单类型1', '工单类型2', '工单类型3', '工单类型4', '我的待办', '我的参与', '已完成', '逾期',]
 // const tagsFromOrder
-
+const user_info = local_get(USER_INFO_ID)
 const tabs = [
-  { title: '全部', sub: 1 },
-  { title: '待办', sub: 2 },
-  { title: '参与', sub: 3 },
-  { title: '完成', sub: 4 },
-  { title: '逾期', sub: 5 },
+  { title: '全部', sub: 1, config: [] },
+  { title: '待办', sub: 2, config: [{key:"executor",value: user_info.userId, operator:"IN" }, {key:"status",value: "1,2", operator:"IN" }] },
+  { title: '参与', sub: 3, config: [{key:"participation",value: user_info.userId, operator:"IN"}] },
+  { title: '完成', sub: 4, config: [{key:"status",value: "3", operator:"IN"}] },
+  { title: '逾期', sub: 5, config: [{key:"overdue", value: user_info.userId, operator:"IN" }] },
 ];
 
 const status = ['开始', '未受理', '待审核', '完成', '逾期']
@@ -24,25 +25,29 @@ const status = ['开始', '未受理', '待审核', '完成', '逾期']
 export default function (props) {
   const { location } = props
   const [orderList, setOrderList] = useState([])
-  const [pageNum, setPageNum] = useState(0)
+  const [count, setCount] = useState(0)
+  const [pageNum, setPageNum] = useState(1)
   const [isYDYMYL, setIsYDYMYL] = useState(false)
   const [isBottom, setIsBottom] = useState(false)
 
   // 搜索相关
+  const [ seachConfig, setSeachConfig ] = useState([])
+  const [ searchBarConfig, setSearchBarConfig] = useState([])
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selectedTags, setSelectedTags] = useState([])
 
-  const loading = (data) => {
+  const loading = useCallback((data) => {
     queryOrderList({
       ...data
     }).then((d) => {
+      setCount(d.count)
       if (d.hasOwnProperty('list')) {
         if (d.list.length !== 10) setIsYDYMYL(true)
         setOrderList([...orderList, ...d.list])
       }
     })
       .catch((e) => { })
-  }
+  })
   const handleChange = (tag, checked) => {
     const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
     setSelectedTags(nextSelectedTags)
@@ -51,54 +56,83 @@ export default function (props) {
     setSelectedTags(selectedTags.filter(t => t !== tag))
   }
   useEffect(() => {
-    if (location.query.number) {
-      loading({
-        "model": {},
-        "pageNum": 0,
-        "pageSize": location.query.number
-      })
-    } else {
-      loading({
-        "model": {},
-        "pageNum": pageNum,
-        "pageSize": 10
-      })
-    }
+    // if (location.query.number) {
+  
+    // } else {
+    //   loading({
+    //     "model": {},
+    //     "pageNum": pageNum,
+    //     "pageSize": 10
+    //   })
+    // }
   }, [])
 
   useEffect(() => {
     if (isBottom && !isYDYMYL) {
       setPageNum(pageNum + 1)
     }
-  }, [isBottom])
+  }, [isBottom, isYDYMYL, pageNum])
 
   useEffect(() => {
     if (isBottom) {
       loading({
         "model": {},
         "pageNum": pageNum,
-        "pageSize": 10
+        "pageSize": 10,
+        model: {
+          attrs: [
+            ...seachConfig,
+            ...searchBarConfig
+          ]
+        }
       })
     }
-  }, [pageNum])
+  }, [isBottom, loading, pageNum, seachConfig, searchBarConfig])
+
+  // 监控搜索设置变化
+  useEffect(() => {
+    loading({
+      "pageNum": 1,
+      "pageSize": 10,
+      model: {
+        attrs: [
+          ...seachConfig,
+          ...searchBarConfig
+        ]
+      }
+    })
+  }, [loading, seachConfig, searchBarConfig])
 
   return (
     <div>
       <HeaderNormal title="工单列表" />
       <Tabs tabs={tabs}
         initialPage={location.query.state}
-        onChange={(tab, index) => {  }}
-        onTabClick={(tab, index) => {  }}
+        onChange={(tab, index) => { }}
+        onTabClick={(tab, index) => {
+          /// tab切换时
+          setPageNum(1)
+          setOrderList([])
+          setIsYDYMYL(false)
+          setSeachConfig(tab.config)
+         }}
       />
       <SearchBar
         className={styles.search}
         showCancelButton
-        placeholder="请输入工单或者流水号"
+        placeholder="请输入工单名称"
         cancelText="筛选"
-        onSubmit={value => {}}
-        onClear={value => {}}
-        onFocus={() =>{}}
-        onBlur={() =>{}}
+        onSubmit={value => { 
+          setPageNum(1)
+          setOrderList([])
+          setIsYDYMYL(false)
+          if(value === '') setSearchBarConfig([])
+          else setSearchBarConfig([{
+            key: 'title',
+            value: value,
+            operator: 'LIKE'
+          }])
+        }}
         onCancel={() => { setDrawerOpen(true) }}
       />
       <Drawer
@@ -137,6 +171,7 @@ export default function (props) {
         }}>
         <WhiteSpace />
         <WingBlank>
+          {count ? (<p style={{ textAlign: 'center', opacity: '.4', height: '.4rem', lineHeight: '.4rem' }}>- 查询到{count}条 -</p>) : null}
           {orderList.length <= 0 ?
             <p style={{ color: '#bbb', textAlign: "center" }}>
               没有工单...

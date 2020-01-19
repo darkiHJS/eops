@@ -38,9 +38,9 @@ export default () => {
         </WingBlank>
       </List>
       <List renderHeader={() => '账户安全'} className="my-list">
-        <Item arrow="horizontal" multipleLine onClick={() => { }}>
+        {/* <Item arrow="horizontal" multipleLine onClick={() => { }}>
           <IconFont type="iconicon-test2" /> 修改密码
-        </Item>
+        </Item> */}
         <Item arrow="horizontal" multipleLine onClick={() => {
           localStorage.removeItem(USER_INFO_ID)
           router.push('/login')
